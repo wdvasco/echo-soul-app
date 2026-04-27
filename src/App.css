@@ -1,0 +1,148 @@
+.app-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-base);
+}
+
+.app-loading-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.app-loading-logo {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+/* ======= App Layout ======= */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 80% 10%, rgba(201,168,76,0.04) 0%, transparent 50%),
+              var(--bg-base);
+}
+
+/* ======= Header ======= */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  z-index: 10;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-brand {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.header-btn {
+  font-size: 12px;
+  padding: 7px 14px;
+}
+
+.header-btn-sm {
+  font-size: 12px;
+  padding: 6px 12px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 1px solid var(--border);
+  padding-left: 12px;
+}
+
+.header-email {
+  font-size: 12px;
+  color: var(--text-muted);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ======= Main Layout ======= */
+.app-main {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  flex: 1;
+  overflow: hidden;
+  gap: 0;
+}
+
+.app-sidebar {
+  border-radius: 0;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-inner {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.app-output {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ======= Error Banner ======= */
+.app-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(192, 80, 75, 0.1);
+  border-bottom: 1px solid rgba(192, 80, 75, 0.2);
+  font-size: 13px;
+  color: var(--danger);
+  flex-shrink: 0;
+}
+
+/* ======= Responsive ======= */
+@media (max-width: 768px) {
+  .app-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .app-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 50vh;
+  }
+}

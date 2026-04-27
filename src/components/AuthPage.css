@@ -1,0 +1,129 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 60% 30%, rgba(201, 168, 76, 0.05) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
+              var(--bg-base);
+  overflow: hidden;
+  position: relative;
+}
+
+.auth-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.auth-logo-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--gold-dim);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.auth-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.auth-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.auth-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 3px;
+  gap: 3px;
+}
+
+.auth-mode-btn {
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 9px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.auth-mode-btn.active {
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid var(--border-strong);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 13px;
+  font-size: 15px;
+  margin-top: 4px;
+}
+
+.auth-error {
+  font-size: 13px;
+  color: var(--danger);
+  padding: 10px 14px;
+  background: rgba(192, 80, 75, 0.1);
+  border: 1px solid rgba(192, 80, 75, 0.2);
+  border-radius: var(--r-sm);
+}
+
+.auth-success {
+  font-size: 13px;
+  color: var(--success);
+  padding: 10px 14px;
+  background: rgba(95, 173, 122, 0.1);
+  border: 1px solid rgba(95, 173, 122, 0.2);
+  border-radius: var(--r-sm);
+}
+
+.auth-tagline {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  font-style: italic;
+}

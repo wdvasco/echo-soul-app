@@ -1,0 +1,260 @@
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.output-empty {
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1;
+  animation: pulse 3s ease infinite;
+}
+
+.empty-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.empty-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.empty-desc strong {
+  color: var(--gold);
+}
+
+/* ======= Block ======= */
+.output-block {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.output-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.output-block-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.output-block-icon {
+  font-size: 15px;
+}
+
+.output-block-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skeleton-body {
+  gap: 8px;
+}
+
+/* ======= Field Sections with Per-Field Copy ======= */
+.field-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Small inline copy button */
+.btn-copy-small {
+  padding: 3px 8px !important;
+  font-size: 11px !important;
+  min-width: 36px;
+  opacity: 0.6;
+  transition: opacity var(--transition), background var(--transition);
+}
+
+.btn-copy-small:hover {
+  opacity: 1;
+}
+
+/* Legacy selectors kept for compatibility */
+.b1-label, .b2-label, .b3-label, .b4-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.b1-section, .b2-section, .b3-section, .b4-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======= Bloco 1 ======= */
+
+.b1-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+.b1-lyrics {
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+}
+
+.b1-styletag {
+  font-size: 12px;
+  color: var(--gold-light);
+  background: var(--gold-glow);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ======= Bloco 2 ======= */
+.b2-text {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+}
+
+/* ======= Bloco 3 ======= */
+.b3-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+}
+
+.b3-desc {
+  font-family: var(--font);
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.b3-hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.b3-hashtag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  padding: 4px 10px;
+}
+
+.b3-pinned {
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  font-style: italic;
+}
+
+/* ======= Bloco 4 ======= */
+.b4-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.b4-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.b4-tag {
+  font-size: 11px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+
+.b4-tag:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
