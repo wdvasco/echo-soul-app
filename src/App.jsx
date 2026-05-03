@@ -69,7 +69,12 @@ export default function App() {
       const json = await res.json()
       if (!res.ok || !json.success) throw new Error(json.error || 'Erro na geração.')
 
-      setOutput(json.data)
+      let finalData = json.data;
+      if (params.tipo_geracao === 'suno') {
+        finalData = { prompt_suno: json.data.bloco1_audio };
+      }
+
+      setOutput(finalData)
       addToast('✓ Output gerado e salvo com sucesso!')
     } catch (err) {
       setError(err.message || 'Erro inesperado. Tente novamente.')

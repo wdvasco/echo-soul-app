@@ -260,6 +260,34 @@ p { line-height: 1.6; }
   text-align: right;
 }
 
+.slider-value-input {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  width: 54px;
+  text-align: right;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  padding: 2px 4px;
+  transition: all var(--transition);
+  -moz-appearance: textfield;
+}
+
+.slider-value-input::-webkit-outer-spin-button,
+.slider-value-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.slider-value-input:hover,
+.slider-value-input:focus {
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;

@@ -1,6 +1,22 @@
 import { useState } from 'react'
 import './ConfigPanel.css'
 
+const TEMAS = [
+  'Neon Shadows',
+  'Midnight Drive',
+  'Sunset Grooves',
+  'Oceanic Depths',
+  'Urban Pulse',
+  'Desert Mirage',
+  'Cosmic Lounge',
+  'Underground Whispers',
+  'Velvet Nights',
+  'Ibiza Sunrise',
+  'Concrete Jungle',
+  'Lost in the Rhythm',
+  'Hypnotic State'
+]
+
 const GENEROS = [
   'Deep House', 'Vocal House', 'Progressive House', 'Nu Disco',
   'Afro House', 'Tech House', 'Organic House', 'Melodic Techno',
@@ -19,7 +35,7 @@ const INSTRUMENTOS = [
 const VOCAIS = ['Male Vocal', 'Female Vocal', 'Duet']
 
 const DEFAULT_STATE = {
-  tema: '',
+  tema: TEMAS[0],
   modo: 'criacao',
   bpm: 125,
   genero: 'Deep House',
@@ -43,8 +59,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
     }))
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleGenerateType(tipoGeracao) {
     onGenerate({
       tema: form.tema,
       modo: form.modo,
@@ -54,23 +69,24 @@ export default function ConfigPanel({ onGenerate, loading }) {
       instrumentacao: form.instrumentacao,
       tipo_vocal: form.tipoVocal,
       style_tag_usuario: form.modo === 'execucao' ? form.styleTagUsuario : undefined,
+      tipo_geracao: tipoGeracao
     })
   }
 
   return (
-    <form id="config-form" onSubmit={handleSubmit} className="config-panel">
+    <form id="config-form" className="config-panel">
       {/* Tema */}
       <div className="form-group">
-        <label className="form-label" htmlFor="tema-input">Tema ou Título</label>
-        <input
-          id="tema-input"
-          type="text"
-          className="form-input"
-          placeholder="Ex: Neon Shadows, Midnight Drive..."
+        <label className="form-label" htmlFor="tema-select">Tema ou Título</label>
+        <select
+          id="tema-select"
+          className="form-select"
           value={form.tema}
           onChange={e => setForm(p => ({ ...p, tema: e.target.value }))}
           required
-        />
+        >
+          {TEMAS.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
       </div>
 
       {/* Modo */}
@@ -133,7 +149,23 @@ export default function ConfigPanel({ onGenerate, loading }) {
             onChange={e => setForm(p => ({ ...p, bpm: Number(e.target.value) }))}
           />
           <span className="slider-label">140</span>
-          <span className="slider-value">{form.bpm}</span>
+          <input
+            type="number"
+            className="slider-value-input"
+            min={110}
+            max={140}
+            value={form.bpm === 0 ? '' : form.bpm}
+            onChange={e => {
+              const val = e.target.value === '' ? 0 : Number(e.target.value);
+              setForm(p => ({ ...p, bpm: val }));
+            }}
+            onBlur={e => {
+              let val = Number(e.target.value);
+              if (val < 110) val = 110;
+              if (val > 140) val = 140;
+              setForm(p => ({ ...p, bpm: val }));
+            }}
+          />
         </div>
       </div>
 
@@ -207,17 +239,30 @@ export default function ConfigPanel({ onGenerate, loading }) {
         </div>
       </div>
 
-      <button
-        id="gerar-btn"
-        type="submit"
-        className="btn btn-primary generate-btn"
-        disabled={loading}
-      >
-        {loading
-          ? <><div className="spinner" /> Gerando output...</>
-          : <><span className="generate-icon">◈</span> Gerar Output</>
-        }
-      </button>
+      <div className="action-buttons">
+        <button
+          type="button"
+          className="btn btn-primary generate-btn"
+          disabled={loading}
+          onClick={() => handleGenerateType('completo')}
+        >
+          {loading
+            ? <><div className="spinner" style={{borderColor: 'rgba(201,168,76,0.2)', borderTopColor: '#C9A84C'}} /> Gerando...</>
+            : <><span className="generate-icon">▶</span> Gerar Pacote Completo</>
+          }
+        </button>
+        <button
+          type="button"
+          className="btn btn-ghost generate-btn"
+          disabled={loading}
+          onClick={() => handleGenerateType('suno')}
+        >
+          {loading
+            ? <><div className="spinner" style={{borderColor: 'rgba(201,168,76,0.2)', borderTopColor: '#C9A84C'}} /> Gerando...</>
+            : <><span className="generate-icon">♫</span> Apenas Prompt SUNO</>
+          }
+        </button>
+      </div>
     </form>
   )
 }

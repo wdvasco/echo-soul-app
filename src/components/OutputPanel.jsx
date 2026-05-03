@@ -95,6 +95,42 @@ function Bloco1({ data }) {
   )
 }
 
+function PromptSuno({ data }) {
+  const promptText = `Generate a song with English lyrics and title. Title: '${data.titulo}'. Style: ${data.style_tag}..`;
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(promptText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback
+    }
+  }
+
+  return (
+    <div className="suno-direct-wrapper animate-fade-up" style={{ animationDelay: '50ms' }}>
+      <div className="suno-direct-header">
+        <span className="suno-direct-icon">{'>_'}</span>
+        PROMPT DIRETO - SUNO AI
+      </div>
+      <div className="suno-direct-body">
+        <div className="suno-direct-label">COMANDO GERADO:</div>
+        <div className="suno-direct-text">
+          {promptText}
+        </div>
+        <button 
+          className="suno-direct-copy-btn" 
+          onClick={handleCopy}
+        >
+          {copied ? '✓ Copiado!' : '⎘ Copiar Comando SUNO'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function Bloco2({ data }) {
   return (
     <OutputBlock title="Pacote Visual" icon="🎨" delay={150}>
@@ -177,14 +213,37 @@ export default function OutputPanel({ output, loading }) {
     )
   }
 
-  const { bloco1_audio: b1, bloco2_visual: b2, bloco3_youtube: b3, bloco4_seo: b4 } = output
+  const { bloco1_audio: b1, bloco2_visual: b2, bloco3_youtube: b3, bloco4_seo: b4, prompt_suno: ps } = output
+
+  if (ps) {
+    return (
+      <div className="output-panel">
+        <div className="output-panel-single">
+          <PromptSuno data={ps} />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="output-panel">
-      {b1 && <Bloco1 data={b1} />}
-      {b2 && <Bloco2 data={b2} />}
-      {b3 && <Bloco3 data={b3} />}
-      {b4 && <Bloco4 data={b4} />}
+      <div className="output-panel-3col">
+        {/* Coluna 1: Áudio */}
+        <div className="output-col">
+          {b1 && <Bloco1 data={b1} />}
+        </div>
+        
+        {/* Coluna 2: YouTube + SEO */}
+        <div className="output-col">
+          {b3 && <Bloco3 data={b3} />}
+          {b4 && <Bloco4 data={b4} />}
+        </div>
+        
+        {/* Coluna 3: Visual */}
+        <div className="output-col">
+          {b2 && <Bloco2 data={b2} />}
+        </div>
+      </div>
     </div>
   )
 }

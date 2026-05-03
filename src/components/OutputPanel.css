@@ -1,13 +1,31 @@
 .output-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
   padding: 24px;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.output-empty {
+.output-panel-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.output-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.output-panel-single {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.output-panel.output-empty {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -48,6 +66,8 @@
   flex-direction: column;
   overflow: hidden;
   flex-shrink: 0;
+  break-inside: avoid;
+  margin-bottom: 24px;
 }
 
 .output-block-header {
@@ -257,4 +277,84 @@
 .b4-tag:hover {
   border-color: var(--border-strong);
   color: var(--text-primary);
+}
+
+/* ======= Prompt Direto SUNO ======= */
+.suno-direct-wrapper {
+  background: var(--bg-elevated);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.suno-direct-header {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 14px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.suno-direct-icon {
+  color: var(--gold);
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.suno-direct-body {
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: var(--r-md);
+  margin: 16px;
+  border: 1px solid var(--border);
+}
+
+.suno-direct-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.suno-direct-text {
+  font-family: monospace, var(--font);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}
+
+.suno-direct-copy-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  border-radius: var(--r-sm);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.suno-direct-copy-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
 }
