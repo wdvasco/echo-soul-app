@@ -176,6 +176,53 @@
   padding: 14px 16px;
 }
 
+/* Folha de Letras Formatada */
+.lyrics-sheet {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  max-height: 480px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.lyrics-section-header {
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+.lyrics-sheet > .lyrics-section-header:first-child {
+  margin-top: 0;
+}
+
+.lyrics-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--border-strong);
+  padding: 2px 10px;
+  border-radius: var(--r-sm);
+}
+
+.lyrics-line {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-family: var(--font);
+  letter-spacing: 0.01em;
+}
+
+.lyrics-spacer {
+  height: 6px;
+}
+
+
 .b1-styletag {
   font-size: 12px;
   color: var(--gold-light);

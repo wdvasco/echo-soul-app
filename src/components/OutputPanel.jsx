@@ -79,14 +79,52 @@ function SkeletonBlock({ delay }) {
   )
 }
 
+function cleanNewlines(str) {
+  if (!str || typeof str !== 'string') return ''
+  return str.replace(/\\n/g, '\n').replace(/\\r/g, '').trim()
+}
+
+function FormattedLyrics({ text }) {
+  const clean = cleanNewlines(text)
+  const lines = clean.split('\n')
+
+  return (
+    <div className="lyrics-sheet">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim()
+        if (!trimmed) {
+          return <div key={idx} className="lyrics-spacer" />
+        }
+
+        // Tags estruturais de música: [Intro], [Verse], [Chorus], [Break], [Outro], etc.
+        if (/^\[.+\]$/.test(trimmed)) {
+          return (
+            <div key={idx} className="lyrics-section-header">
+              <span className="lyrics-tag">{trimmed}</span>
+            </div>
+          )
+        }
+
+        return (
+          <div key={idx} className="lyrics-line">
+            {trimmed}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 function Bloco1({ data }) {
+  const cleanedLyrics = cleanNewlines(data.letras)
+
   return (
     <OutputBlock title="Pacote Suno — Áudio" icon="🎵" delay={50}>
       <FieldSection label="Título" text={data.titulo} id="copy-b1-titulo">
         <p className="b1-title">{data.titulo}</p>
       </FieldSection>
-      <FieldSection label="Letras" text={data.letras} id="copy-b1-letras">
-        <pre className="b1-lyrics">{data.letras}</pre>
+      <FieldSection label="Letras" text={cleanedLyrics} id="copy-b1-letras">
+        <FormattedLyrics text={data.letras} />
       </FieldSection>
       <FieldSection label="Style Tag (SUNO)" text={data.style_tag} id="copy-b1-styletag">
         <div className="b1-styletag">{data.style_tag}</div>
@@ -148,14 +186,15 @@ function Bloco2({ data }) {
 }
 
 function Bloco3({ data }) {
+  const cleanedDesc = cleanNewlines(data.descricao)
   const hashtagsStr = Array.isArray(data.hashtags) ? data.hashtags.join(' ') : data.hashtags
   return (
     <OutputBlock title="Pacote YouTube" icon="📺" delay={250}>
       <FieldSection label="Título do Vídeo" text={data.titulo} id="copy-b3-titulo">
         <p className="b3-title">{data.titulo}</p>
       </FieldSection>
-      <FieldSection label="Descrição" text={data.descricao} id="copy-b3-desc">
-        <pre className="b3-desc">{data.descricao}</pre>
+      <FieldSection label="Descrição" text={cleanedDesc} id="copy-b3-desc">
+        <pre className="b3-desc">{cleanedDesc}</pre>
       </FieldSection>
       <FieldSection label="Hashtags" text={hashtagsStr} id="copy-b3-hashtags">
         <div className="b3-hashtags">

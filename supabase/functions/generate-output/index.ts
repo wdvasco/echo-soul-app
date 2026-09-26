@@ -233,6 +233,16 @@ MANDATORY RULES:
       throw new Error(`Groq API error: could not generate complete 4-block package. Last error: ${lastError}`);
     }
 
+    // Post-process: clean escaped newlines
+    try {
+      if (typeof parsedOutput?.bloco1_audio?.letras === "string") {
+        parsedOutput.bloco1_audio.letras = parsedOutput.bloco1_audio.letras.replace(/\\n/g, "\n");
+      }
+      if (typeof parsedOutput?.bloco3_youtube?.descricao === "string") {
+        parsedOutput.bloco3_youtube.descricao = parsedOutput.bloco3_youtube.descricao.replace(/\\n/g, "\n");
+      }
+    } catch { /* ignore */ }
+
     // Post-process: ensure emoji footer is present in descricao
     try {
       const b3 = parsedOutput.bloco3_youtube as Record<string, string>;
