@@ -358,3 +358,17 @@
   background: var(--gold-light);
   transform: translateY(-1px);
 }
+
+/* Responsive grid for output panels */
+@media (max-width: 1300px) {
+  .output-panel-3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .output-panel-3col {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { STYLE_PRESETS } from '../data/stylePresets'
 import './ConfigPanel.css'
 
 const TEMAS = [
@@ -43,10 +44,12 @@ const DEFAULT_STATE = {
   instrumentacao: [],
   tipoVocal: 'Male Vocal',
   styleTagUsuario: '',
+  selectedPresetId: '',
 }
 
 export default function ConfigPanel({ onGenerate, loading }) {
   const [form, setForm] = useState(DEFAULT_STATE)
+
 
   const bpmPct = ((form.bpm - 110) / (140 - 110)) * 100
 
@@ -56,6 +59,31 @@ export default function ConfigPanel({ onGenerate, loading }) {
       [field]: prev[field].includes(value)
         ? prev[field].filter(v => v !== value)
         : [...prev[field], value],
+    }))
+  }
+
+  function handlePresetSelect(presetId) {
+    if (!presetId) {
+      setForm(prev => ({
+        ...prev,
+        selectedPresetId: '',
+      }))
+      return
+    }
+
+    const preset = STYLE_PRESETS.find(p => p.id === presetId)
+    if (!preset) return
+
+    setForm(prev => ({
+      ...prev,
+      selectedPresetId: preset.id,
+      genero: preset.genero,
+      bpm: preset.bpm,
+      tipoVocal: preset.tipoVocal || prev.tipoVocal,
+      moods: preset.moods || prev.moods,
+      instrumentacao: preset.instrumentacao || prev.instrumentacao,
+      styleTagUsuario: preset.styleTag,
+      modo: 'execucao', // presets técnicos usam o modo de execução
     }))
   }
 
@@ -73,6 +101,10 @@ export default function ConfigPanel({ onGenerate, loading }) {
     })
   }
 
+  // Agrupar presets por categoria
+  const techHousePresets = STYLE_PRESETS.filter(p => p.categoria === 'Tech House')
+  const deepHousePresets = STYLE_PRESETS.filter(p => p.categoria !== 'Tech House')
+
   return (
     <form id="config-form" className="config-panel">
       {/* Tema */}
@@ -87,6 +119,44 @@ export default function ConfigPanel({ onGenerate, loading }) {
         >
           {TEMAS.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
+      </div>
+
+      {/* Preset de Estilo Musical */}
+      <div className="form-group">
+        <div className="form-label-row">
+          <label className="form-label" htmlFor="preset-select">Presets de Estilo Musical</label>
+          {form.selectedPresetId && (
+            <button
+              type="button"
+              className="preset-clear-btn"
+              onClick={() => handlePresetSelect('')}
+              title="Limpar seleção de preset"
+            >
+              Limpar
+            </button>
+          )}
+        </div>
+        <select
+          id="preset-select"
+          className="form-select preset-select"
+          value={form.selectedPresetId}
+          onChange={e => handlePresetSelect(e.target.value)}
+        >
+          <option value="">-- Personalizado / Escolha um Estilo Pronto --</option>
+          <optgroup label="Tech House (130 BPM)">
+            {techHousePresets.map(p => (
+              <option key={p.id} value={p.id}>{p.nome}</option>
+            ))}
+          </optgroup>
+          <optgroup label="Deep House & Progressive (124 BPM)">
+            {deepHousePresets.map(p => (
+              <option key={p.id} value={p.id}>{p.nome}</option>
+            ))}
+          </optgroup>
+        </select>
+        <p className="mode-hint">
+          Selecione um estilo pronto para carregar BPM, gênero, vocal e arranjo técnico completo automaticamente.
+        </p>
       </div>
 
       {/* Modo */}
@@ -120,12 +190,17 @@ export default function ConfigPanel({ onGenerate, loading }) {
       {/* Style Tag (apenas Execução) */}
       {form.modo === 'execucao' && (
         <div className="form-group animate-fade-in">
-          <label className="form-label" htmlFor="style-tag-input">Keywords Técnicas (Style Tag)</label>
-          <input
+          <div className="form-label-row">
+            <label className="form-label" htmlFor="style-tag-input">Keywords Técnicas (Style Tag)</label>
+            {form.selectedPresetId && (
+              <span className="preset-active-tag">Preset Ativo</span>
+            )}
+          </div>
+          <textarea
             id="style-tag-input"
-            type="text"
-            className="form-input"
-            placeholder="Ex: 124 BPM, deep house, piano, female vocal, cinematic..."
+            className="form-input form-textarea"
+            rows={4}
+            placeholder="Ex: 130 BPM, Tech House, rolling sub-bass, syncopated percussion, dark underground pulse..."
             value={form.styleTagUsuario}
             onChange={e => setForm(p => ({ ...p, styleTagUsuario: e.target.value }))}
           />

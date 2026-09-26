@@ -128,9 +128,18 @@ export default function App() {
 
         <div className="header-right">
           <button
+            id="search-header-btn"
+            className="btn btn-ghost header-btn"
+            onClick={() => setShowHistory(true)}
+            title="Buscar e filtrar músicas criadas"
+          >
+            🔍 Buscar Músicas
+          </button>
+          <button
             id="history-btn"
             className="btn btn-ghost header-btn"
             onClick={() => setShowHistory(true)}
+            title="Ver histórico de músicas"
           >
             🕐 Histórico
           </button>
