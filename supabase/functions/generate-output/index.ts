@@ -106,19 +106,20 @@ Deno.serve(async (req: Request) => {
       ? `The user provided these exact technical style keywords that MUST be used as-is: "${style_tag_usuario ?? ''}"`
       : `Architect the full technical style based on: Mood: ${moodStr}. Genre: ${genero}. Instruments: ${instrStr}. BPM: ${bpm}.`;
 
-    const systemPrompt = `You are ECHO SOUL, an AI music production assistant for a DJ with 20+ years of experience.
-You generate ready-to-use content packages for SUNO AI and YouTube.
+    const systemPrompt = `You are ECHO SOUL, a versatile AI music producer and creative director experienced across electronic music (House, Tech House, Progressive), Rock, Grunge, New Wave, Post-Punk, and Pop.
+You generate ready-to-use content packages for SUNO AI and YouTube tailored specifically to the requested genre (${genero}).
 Always respond with valid JSON only. No markdown, no extra text, no explanation.
 All content must be in English.
 IMPORTANT: You MUST generate all 4 blocks in the JSON: bloco1_audio, bloco2_visual, bloco3_youtube, and bloco4_seo. Do not omit any block!
+Adapt ALL visual aesthetics, YouTube title format, description, hashtags, and SEO tags strictly to the chosen genre (${genero}) - do NOT use House/DJ tags when the genre is Rock, Grunge, New Wave, or Pop.
 You MUST include emoji characters exactly as instructed in the description template.`;
 
     const descTemplate = [
-      "Echo Soul is a channel dedicated to the deep and immersive atmosphere of [GENRE] and [RELATED GENRE].",
+      "Echo Soul is a channel dedicated to the immersive sound and atmosphere of [GENRE] and [RELATED SUBGENRE].",
       "",
-      "[ONE PARAGRAPH: atmospheric journey description. Include the song title in quotes, vocal type, key instruments, BPM.]",
+      "[ONE PARAGRAPH: vivid journey description matching the genre and theme. Include the song title in quotes, vocal type, key instruments, BPM.]",
       "",
-      "Immerse yourself in this [MOOD ADJECTIVE] late-night mood.",
+      "Immerse yourself in this [MOOD ADJECTIVE] [GENRE] experience.",
       "",
       "Technical Credits:",
       "\u2022 Genre: [PRIMARY GENRE] / [SECONDARY DESCRIPTOR]",
@@ -128,11 +129,11 @@ You MUST include emoji characters exactly as instructed in the description templ
       "",
       "Follow Echo Soul for more curated sound experiences.",
       "",
-      "[5-6 HASHTAGS INLINE e.g. #DeepHouse #EchoSoul #LateNight]",
+      "[5-6 GENRE-RELEVANT HASHTAGS INLINE e.g. #Grunge #90sRock #EchoSoul]",
       "",
       "\uD83C\uDF19 [SHORT CINEMATIC TAGLINE SENTENCE.]",
       "",
-      "\uD83C\uDFA7 [SHORT SENSORY OR GROOVE TAGLINE SENTENCE.]",
+      "\uD83C\uDFA7 [SHORT SENSORY OR GROOVE/RIFF TAGLINE SENTENCE.]",
       "",
       "\uD83D\uDD14 Subscribe and turn on notifications to discover new tracks every week."
     ].join("\n");
@@ -150,30 +151,31 @@ ${styleSection}
 Return this exact JSON structure with ALL 4 BLOCKS FULLY POPULATED:
 {
   "bloco1_audio": {
-    "titulo": "2-5 word English song title, dark and evocative",
+    "titulo": "2-5 word English song title matching the theme and genre",
     "letras": "[Intro]\\nshort instrumental cue\\n\\n[Verse]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Break]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Outro]\\nline 1\\nline 2",
-    "style_tag": "8-14 comma-separated SUNO style keywords including BPM, genre, key instruments, vocal type, mood"
+    "style_tag": "8-14 comma-separated SUNO style keywords including BPM, ${genero}, key instruments, vocal type, mood"
   },
   "bloco2_visual": {
-    "arte_principal": "Detailed dark urban cinematic image prompt: Scene, Lighting, Color palette, Aesthetic, Atmosphere",
-    "thumbnail": "YouTube thumbnail prompt: bold composition, high contrast, readable title, impactful central visual",
-    "video_loop": "3-5 sentence urban motion loop for a YouTube visualizer synchronized with the beat, dark aesthetic"
+    "arte_principal": "Detailed cinematic image prompt matching ${genero} and ${tema}: Scene, Lighting, Color palette, Aesthetic, Atmosphere",
+    "thumbnail": "YouTube thumbnail prompt matching ${genero}: bold composition, high contrast, readable title, impactful central visual",
+    "video_loop": "3-5 sentence motion loop for a YouTube visualizer synchronized with the beat/rhythm, matching ${genero} aesthetic"
   },
   "bloco3_youtube": {
-    "titulo": "[Song Name] | [Emotional Descriptor] | [Genre] Mix | [BPM] BPM",
+    "titulo": "[Song Name] | [Emotional Descriptor] | [${genero}] | [BPM] BPM",
     "descricao": "FOLLOW THIS TEMPLATE EXACTLY INCLUDING THE EMOJI LINES AT THE END:\\n${descTemplate}",
-    "hashtags": ["#DeepHouse","#LateNightVibes","#HouseMusic","#ElectronicMusic","#ChillHouse","#DJMix","#NightDrive","#CinematicHouse","#UndergroundHouse","#SlowBurn","#EchoSoul","#UrbanSeries","#EchoSoulDJ","#SunoAI","#AIMusic"],
+    "hashtags": ["15 hashtags strictly relevant to ${genero}, ${moodStr}, EchoSoul, SunoAI"],
     "comentario_fixado": "A short engaging question in English to spark conversation in YouTube comments"
   },
   "bloco4_seo": {
-    "tags_youtube": ["deep house 2025","late night house music","chill house mix","underground house","melodic house","house music dj set","night drive music","focus music electronic","study beats house","dark house music","groovy house","soulful house","atmospheric house","cinematic house music","deep house vibes","electronic music mix","dj mix 2025","house music playlist"]
+    "tags_youtube": ["15-20 plain text YouTube SEO tags strictly relevant to ${genero}, ${tema}, ${moodStr}, and similar artists/styles"]
   }
 }
 
 MANDATORY RULES:
 - Include ALL 4 blocks: bloco1_audio, bloco2_visual, bloco3_youtube, bloco4_seo. Do not skip or truncate bloco3_youtube or bloco4_seo!
 - ALL content in English.
-- The descricao field MUST end with the 3 emoji lines (🌙, 🎧, 🔔).
+- Every field (lyrics, visual prompts, YouTube description, hashtags, SEO tags) MUST reflect the selected genre "${genero}" - never use House/DJ terms unless the genre is electronic/house.
+- The descricao field MUST end with the 3 emoji lines (moon, headphones, bell).
 - hashtags array: exactly 15 items.
 - tags_youtube array: 15-20 plain text tags.`;
 

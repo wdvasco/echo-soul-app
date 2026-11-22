@@ -111,5 +111,99 @@ export const STYLE_PRESETS = [
     moods: ['Cinematic', 'Melancholic'],
     instrumentacao: ['Sub-Bass', 'Synth Pads', 'Strings'],
     styleTag: '124 bpm, progressive deep house, hypnotic male vocal, melodic synth intro, cinematic atmosphere, warm pads, slap bass, emotional chord progression, driving bassline, lush strings.'
+  },
+
+  // ROCK & GRUNGE
+  {
+    id: 'grunge-90s-seattle',
+    nome: 'Grunge — 90s Seattle Raw Guitars & Angst (118 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Grunge',
+    bpm: 118,
+    tipoVocal: 'Male Vocal',
+    moods: ['Gritty', 'Melancholic', 'Rebellious'],
+    instrumentacao: ['Distorted Guitar', 'Bass Guitar', 'Acoustic Drums'],
+    styleTag: '90s Seattle grunge, 118 BPM, quiet-loud-quiet dynamics, clean chorus-soaked electric guitar in verses exploding into heavy fuzz-distorted power chords in chorus, punchy acoustic drums, growling bass guitar, raw raspy male vocal, angsty, melancholic, analog tape saturation'
+  },
+  {
+    id: 'grunge-dark-acoustic',
+    nome: 'Grunge — Dark Acoustic & Heavy Chorus (96 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Grunge',
+    bpm: 96,
+    tipoVocal: 'Male Vocal',
+    moods: ['Introspective', 'Gritty', 'Melancholic'],
+    instrumentacao: ['Guitar', 'Distorted Guitar', 'Bass Guitar', 'Acoustic Drums'],
+    styleTag: '96 BPM, dark acoustic grunge, brooding acoustic guitar intro, moody bassline, heavy distorted chorus drop, emotional raspy male vocal, raw snare crack, 90s alternative rock, introspective, gritty'
+  },
+  {
+    id: 'rock-alt-indie',
+    nome: 'Alternative Rock — Driving Guitars & Anthemic Hook (128 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Alternative Rock',
+    bpm: 128,
+    tipoVocal: 'Male Vocal',
+    moods: ['Anthemic', 'Energetic', 'Cinematic'],
+    instrumentacao: ['Electric Guitar', 'Bass Guitar', 'Acoustic Drums'],
+    styleTag: 'Alternative rock, 128 BPM, crisp overdriven electric guitars, driving bassline, tight live acoustic drums, soaring anthemic chorus, energetic male vocal with subtle room reverb, modern indie rock polish, punchy, dynamic'
+  },
+  {
+    id: 'rock-classic-arena',
+    nome: 'Classic Rock — Vintage Riffs & Hammond Feel (120 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Classic Rock',
+    bpm: 120,
+    tipoVocal: 'Male Vocal',
+    moods: ['Anthemic', 'Rebellious', 'Energetic'],
+    instrumentacao: ['Electric Guitar', 'Bass Guitar', 'Acoustic Drums', 'Piano'],
+    styleTag: 'Classic rock, 120 BPM, warm tube-amp electric guitar riffs, bluesy solo, driving bass, big live drum kit with roomy snare, soulful gritty male vocal, vintage 70s analog warmth, anthemic'
+  },
+
+  // NEW WAVE & POST-PUNK
+  {
+    id: 'nw-80s-synth',
+    nome: 'New Wave — 80s Analog Synths & Chorus Guitar (126 BPM)',
+    categoria: 'New Wave & Post-Punk',
+    genero: 'New Wave',
+    bpm: 126,
+    tipoVocal: 'Male Vocal',
+    moods: ['Nostalgic', 'Hypnotic', 'Cinematic'],
+    instrumentacao: ['Analog Synths', 'Electric Guitar', 'Drum Machine', 'Bass Guitar'],
+    styleTag: '80s New Wave, 126 BPM, shimmering chorus-effect electric guitar, punchy LinnDrum-style drum machine, pulsing analog synth bassline, lush Juno pads, dramatic baritone male vocal with plate reverb, nostalgic, retro-futuristic, nocturnal'
+  },
+  {
+    id: 'nw-post-punk-dark',
+    nome: 'Post-Punk — Cold Bassline & Dark Wave (132 BPM)',
+    categoria: 'New Wave & Post-Punk',
+    genero: 'Post-Punk',
+    bpm: 132,
+    tipoVocal: 'Male Vocal',
+    moods: ['Mysterious', 'Melancholic', 'Hypnotic'],
+    instrumentacao: ['Bass Guitar', 'Electric Guitar', 'Drum Machine', 'Analog Synths'],
+    styleTag: 'Dark post-punk, 132 BPM, driving melodic bass guitar lead, angular reverb-drenched guitar, crisp mechanical drum machine, cold atmospheric synth pads, detached baritone male vocal, nocturnal, moody, underground'
+  },
+
+  // POP & SYNTH-POP
+  {
+    id: 'pop-dark-modern',
+    nome: 'Dark Pop — Atmospheric Synths & Crisp Beat (116 BPM)',
+    categoria: 'Pop & Synth-Pop',
+    genero: 'Pop',
+    bpm: 116,
+    tipoVocal: 'Female Vocal',
+    moods: ['Sensual', 'Cinematic', 'Dreamy'],
+    instrumentacao: ['Synth Pads', 'Sub-Bass', 'Piano', 'Percussion'],
+    styleTag: 'Modern dark pop, 116 BPM, intimate breathy female vocal, deep sub-bass, minimalist crisp trap-pop percussion, atmospheric synth pads, emotional piano chords, wide glossy radio-ready mix, cinematic, hypnotic'
+  },
+  {
+    id: 'pop-80s-synthpop',
+    nome: 'Synth-Pop — Retro Neon Hooks & Gated Snare (122 BPM)',
+    categoria: 'Pop & Synth-Pop',
+    genero: 'Synth-Pop',
+    bpm: 122,
+    tipoVocal: 'Female Vocal',
+    moods: ['Euphoric', 'Nostalgic', 'Dreamy'],
+    instrumentacao: ['Analog Synths', 'Drum Machine', 'Synth Pads'],
+    styleTag: '80s synth-pop, 122 BPM, bright analog synth arpeggios, gated-reverb snare, bouncy synth bass, catchy soaring female vocal hook, lush retro pads, euphoric, nostalgic, neon cinematic'
   }
 ]

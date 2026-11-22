@@ -15,28 +15,47 @@ const TEMAS = [
   'Ibiza Sunrise',
   'Concrete Jungle',
   'Lost in the Rhythm',
-  'Hypnotic State'
+  'Hypnotic State',
+  'Broken Mirrors',
+  'Rust & Rain',
+  'Electric Youth',
+  'Neon Arcade',
+  'Fading Signal',
+  'Velvet Rebellion',
+  'Echoes of 1984',
+  'Static Heartbeat',
 ]
 
 const GENEROS = [
   'Deep House', 'Vocal House', 'Progressive House', 'Nu Disco',
   'Afro House', 'Tech House', 'Organic House', 'Melodic Techno',
+  'Classic Rock', 'Alternative Rock', 'Hard Rock', 'Indie Rock',
+  'Grunge', 'New Wave', 'Post-Punk', 'Pop', 'Synth-Pop',
 ]
 
 const MOODS = [
   'Late-Night', 'Melancholic', 'Cinematic', 'Euphoric',
   'Hypnotic', 'Introspective', 'Sensual', 'Mysterious',
+  'Rebellious', 'Nostalgic', 'Anthemic', 'Gritty',
+  'Energetic', 'Dreamy',
 ]
 
 const INSTRUMENTOS = [
   'Rhodes', 'Saxophone', 'Sub-Bass', 'Synth Pads',
-  'Guitar', 'Flute', 'Strings', 'Percussion',
+  'Guitar', 'Electric Guitar', 'Distorted Guitar', 'Bass Guitar',
+  'Acoustic Drums', 'Analog Synths', 'Drum Machine', 'Piano',
+  'Flute', 'Strings', 'Percussion',
 ]
+
+const BPM_MIN = 60
+const BPM_MAX = 190
 
 const VOCAIS = ['Male Vocal', 'Female Vocal', 'Duet']
 
 const DEFAULT_STATE = {
   tema: TEMAS[0],
+  customTema: '',
+  isCustomTema: false,
   modo: 'criacao',
   bpm: 125,
   genero: 'Deep House',
@@ -51,7 +70,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
   const [form, setForm] = useState(DEFAULT_STATE)
 
 
-  const bpmPct = ((form.bpm - 110) / (140 - 110)) * 100
+  const bpmPct = Math.max(0, Math.min(100, ((form.bpm - BPM_MIN) / (BPM_MAX - BPM_MIN)) * 100))
 
   function toggleChip(field, value) {
     setForm(prev => ({
@@ -88,8 +107,11 @@ export default function ConfigPanel({ onGenerate, loading }) {
   }
 
   function handleGenerateType(tipoGeracao) {
+    const finalTema = form.isCustomTema
+      ? (form.customTema.trim() || TEMAS[0])
+      : form.tema
     onGenerate({
-      tema: form.tema,
+      tema: finalTema,
       modo: form.modo,
       bpm: form.bpm,
       genero: form.genero,
@@ -101,9 +123,13 @@ export default function ConfigPanel({ onGenerate, loading }) {
     })
   }
 
-  // Agrupar presets por categoria
-  const techHousePresets = STYLE_PRESETS.filter(p => p.categoria === 'Tech House')
-  const deepHousePresets = STYLE_PRESETS.filter(p => p.categoria !== 'Tech House')
+  // Agrupar presets dinamicamente por categoria
+  const presetGroups = STYLE_PRESETS.reduce((acc, preset) => {
+    const cat = preset.categoria || 'Outros'
+    if (!acc[cat]) acc[cat] = []
+    acc[cat].push(preset)
+    return acc
+  }, {})
 
   return (
     <form id="config-form" className="config-panel">
@@ -113,12 +139,30 @@ export default function ConfigPanel({ onGenerate, loading }) {
         <select
           id="tema-select"
           className="form-select"
-          value={form.tema}
-          onChange={e => setForm(p => ({ ...p, tema: e.target.value }))}
+          value={form.isCustomTema ? '__custom__' : form.tema}
+          onChange={e => {
+            if (e.target.value === '__custom__') {
+              setForm(p => ({ ...p, isCustomTema: true }))
+            } else {
+              setForm(p => ({ ...p, isCustomTema: false, tema: e.target.value }))
+            }
+          }}
           required
         >
+          <option value="__custom__">✏️ Personalizado (digitar tema livre)...</option>
           {TEMAS.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
+        {form.isCustomTema && (
+          <input
+            id="tema-custom-input"
+            type="text"
+            className="form-input"
+            style={{ marginTop: 8 }}
+            placeholder="Ex: Rain on Sunset Boulevard, 1994..."
+            value={form.customTema}
+            onChange={e => setForm(p => ({ ...p, customTema: e.target.value }))}
+          />
+        )}
       </div>
 
       {/* Preset de Estilo Musical */}
@@ -143,16 +187,13 @@ export default function ConfigPanel({ onGenerate, loading }) {
           onChange={e => handlePresetSelect(e.target.value)}
         >
           <option value="">-- Personalizado / Escolha um Estilo Pronto --</option>
-          <optgroup label="Tech House (130 BPM)">
-            {techHousePresets.map(p => (
-              <option key={p.id} value={p.id}>{p.nome}</option>
-            ))}
-          </optgroup>
-          <optgroup label="Deep House & Progressive (124 BPM)">
-            {deepHousePresets.map(p => (
-              <option key={p.id} value={p.id}>{p.nome}</option>
-            ))}
-          </optgroup>
+          {Object.entries(presetGroups).map(([categoria, list]) => (
+            <optgroup key={categoria} label={categoria}>
+              {list.map(p => (
+                <option key={p.id} value={p.id}>{p.nome}</option>
+              ))}
+            </optgroup>
+          ))}
         </select>
         <p className="mode-hint">
           Selecione um estilo pronto para carregar BPM, gênero, vocal e arranjo técnico completo automaticamente.
@@ -213,22 +254,22 @@ export default function ConfigPanel({ onGenerate, loading }) {
       <div className="form-group">
         <label className="form-label">BPM</label>
         <div className="slider-container">
-          <span className="slider-label">110</span>
+          <span className="slider-label">{BPM_MIN}</span>
           <input
             id="bpm-slider"
             type="range"
-            min={110}
-            max={140}
+            min={BPM_MIN}
+            max={BPM_MAX}
             value={form.bpm}
             style={{ '--pct': `${bpmPct}%` }}
             onChange={e => setForm(p => ({ ...p, bpm: Number(e.target.value) }))}
           />
-          <span className="slider-label">140</span>
+          <span className="slider-label">{BPM_MAX}</span>
           <input
             type="number"
             className="slider-value-input"
-            min={110}
-            max={140}
+            min={BPM_MIN}
+            max={BPM_MAX}
             value={form.bpm === 0 ? '' : form.bpm}
             onChange={e => {
               const val = e.target.value === '' ? 0 : Number(e.target.value);
@@ -236,8 +277,8 @@ export default function ConfigPanel({ onGenerate, loading }) {
             }}
             onBlur={e => {
               let val = Number(e.target.value);
-              if (val < 110) val = 110;
-              if (val > 140) val = 140;
+              if (val < BPM_MIN) val = BPM_MIN;
+              if (val > BPM_MAX) val = BPM_MAX;
               setForm(p => ({ ...p, bpm: val }));
             }}
           />
