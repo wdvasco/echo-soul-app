@@ -205,5 +205,97 @@ export const STYLE_PRESETS = [
     moods: ['Euphoric', 'Nostalgic', 'Dreamy'],
     instrumentacao: ['Analog Synths', 'Drum Machine', 'Synth Pads'],
     styleTag: '80s synth-pop, 122 BPM, bright analog synth arpeggios, gated-reverb snare, bouncy synth bass, catchy soaring female vocal hook, lush retro pads, euphoric, nostalgic, neon cinematic'
+  },
+  {
+    id: 'pop-indie-groove',
+    nome: 'Pop — Warm Guitar & Radio Hook (112 BPM)',
+    categoria: 'Pop & Synth-Pop',
+    genero: 'Pop',
+    bpm: 112,
+    tipoVocal: 'Male Vocal',
+    moods: ['Euphoric', 'Dreamy', 'Nostalgic'],
+    instrumentacao: ['Electric Guitar', 'Piano', 'Sub-Bass', 'Percussion'],
+    styleTag: 'Modern pop, 112 BPM, clean rhythmic electric guitar chords, warm piano layers, tight punchy drums, deep sub-bass, smooth catchy male vocal, glossy radio mix, uplifting, emotional'
+  },
+
+  // HARD ROCK & INDIE ROCK
+  {
+    id: 'rock-hard-arena',
+    nome: 'Hard Rock — Heavy Riffs & Thunderous Drums (132 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Hard Rock',
+    bpm: 132,
+    tipoVocal: 'Male Vocal',
+    moods: ['Rebellious', 'Energetic', 'Anthemic'],
+    instrumentacao: ['Distorted Guitar', 'Bass Guitar', 'Acoustic Drums'],
+    styleTag: 'Hard rock, 132 BPM, heavy crunch electric guitar riffs, driving bass guitar, thunderous live acoustic drums, soaring gritty male vocal, stadium-sized chorus, analog saturation, high energy'
+  },
+  {
+    id: 'rock-indie-jangle',
+    nome: 'Indie Rock — Reverb Guitars & Driving Beat (124 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Indie Rock',
+    bpm: 124,
+    tipoVocal: 'Male Vocal',
+    moods: ['Nostalgic', 'Dreamy', 'Energetic'],
+    instrumentacao: ['Electric Guitar', 'Bass Guitar', 'Acoustic Drums', 'Analog Synths'],
+    styleTag: 'Indie rock, 124 BPM, shimmering reverb-soaked electric guitars, melodic driving bassline, tight upbeat acoustic drums, subtle analog synth texture, expressive male vocal, bittersweet, anthemic'
+  },
+
+  // ELETRÔNICA EXTRA (VOCAL HOUSE, NU DISCO, AFRO, ORGANIC, MELODIC TECHNO)
+  {
+    id: 'vh-soulful-diva',
+    nome: 'Vocal House — Soulful Hook & Piano Chords (124 BPM)',
+    categoria: 'Deep House',
+    genero: 'Vocal House',
+    bpm: 124,
+    tipoVocal: 'Female Vocal',
+    moods: ['Euphoric', 'Sensual', 'Late-Night'],
+    instrumentacao: ['Piano', 'Sub-Bass', 'Synth Pads', 'Percussion'],
+    styleTag: 'Vocal house, 124 BPM, uplifting house piano chords, warm analog sub-bass, crisp four-on-the-floor groove, soulful powerhouse female vocal, lush pads, club-ready mix, euphoric'
+  },
+  {
+    id: 'nd-funky-bass',
+    nome: 'Nu Disco — Funky Bassline & Retro Synths (118 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Nu Disco',
+    bpm: 118,
+    tipoVocal: 'Female Vocal',
+    moods: ['Euphoric', 'Sensual', 'Nostalgic'],
+    instrumentacao: ['Bass Guitar', 'Analog Synths', 'Electric Guitar', 'Percussion'],
+    styleTag: 'Nu disco, 118 BPM, funky slap bass guitar, clean rhythmic disco guitar chops, warm vintage analog synths, punchy claps, smooth breathy female vocal, retro-modern groove'
+  },
+  {
+    id: 'ah-tribal-organic',
+    nome: 'Afro House — Tribal Percussion & Deep Chants (122 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Afro House',
+    bpm: 122,
+    tipoVocal: 'Male Vocal',
+    moods: ['Hypnotic', 'Cinematic', 'Mysterious'],
+    instrumentacao: ['Percussion', 'Sub-Bass', 'Flute', 'Synth Pads'],
+    styleTag: 'Afro house, 122 BPM, intricate organic tribal percussion, rolling deep sub-bass, atmospheric ethnic flute motifs, warm synth pads, hypnotic soulful male vocal, sunset club vibe'
+  },
+  {
+    id: 'oh-sunset-downtempo',
+    nome: 'Organic House — Acoustic Textures & Warm Pads (120 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Organic House',
+    bpm: 120,
+    tipoVocal: 'Female Vocal',
+    moods: ['Dreamy', 'Introspective', 'Late-Night'],
+    instrumentacao: ['Guitar', 'Flute', 'Percussion', 'Synth Pads'],
+    styleTag: 'Organic house, 120 BPM, warm acoustic guitar plucks, airy flute textures, soft shaker percussion, deep mellow bassline, ethereal female vocal, meditative, sunset desert atmosphere'
+  },
+  {
+    id: 'mt-afterlife-lead',
+    nome: 'Melodic Techno — Arpeggiated Synth & Dark Tension (128 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Melodic Techno',
+    bpm: 128,
+    tipoVocal: 'Male Vocal',
+    moods: ['Hypnotic', 'Cinematic', 'Mysterious'],
+    instrumentacao: ['Analog Synths', 'Sub-Bass', 'Synth Pads', 'Drum Machine'],
+    styleTag: 'Melodic techno, 128 BPM, driving punchy kick, rolling dark sub-bass, hypnotic evolving analog synth arpeggio, wide cinematic tension risers, processed atmospheric male vocal, underground club'
   }
 ]

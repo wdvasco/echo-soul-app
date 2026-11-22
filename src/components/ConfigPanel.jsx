@@ -1,37 +1,7 @@
 import { useState } from 'react'
 import { STYLE_PRESETS } from '../data/stylePresets'
+import { GENRE_GROUPS, getDefaultBpmForGenre, getThemesForGenre } from '../data/genreCatalog'
 import './ConfigPanel.css'
-
-const TEMAS = [
-  'Neon Shadows',
-  'Midnight Drive',
-  'Sunset Grooves',
-  'Oceanic Depths',
-  'Urban Pulse',
-  'Desert Mirage',
-  'Cosmic Lounge',
-  'Underground Whispers',
-  'Velvet Nights',
-  'Ibiza Sunrise',
-  'Concrete Jungle',
-  'Lost in the Rhythm',
-  'Hypnotic State',
-  'Broken Mirrors',
-  'Rust & Rain',
-  'Electric Youth',
-  'Neon Arcade',
-  'Fading Signal',
-  'Velvet Rebellion',
-  'Echoes of 1984',
-  'Static Heartbeat',
-]
-
-const GENEROS = [
-  'Deep House', 'Vocal House', 'Progressive House', 'Nu Disco',
-  'Afro House', 'Tech House', 'Organic House', 'Melodic Techno',
-  'Classic Rock', 'Alternative Rock', 'Hard Rock', 'Indie Rock',
-  'Grunge', 'New Wave', 'Post-Punk', 'Pop', 'Synth-Pop',
-]
 
 const MOODS = [
   'Late-Night', 'Melancholic', 'Cinematic', 'Euphoric',
@@ -47,18 +17,20 @@ const INSTRUMENTOS = [
   'Flute', 'Strings', 'Percussion',
 ]
 
+const VOCAIS = ['Male Vocal', 'Female Vocal', 'Duet']
+
 const BPM_MIN = 60
 const BPM_MAX = 190
 
-const VOCAIS = ['Male Vocal', 'Female Vocal', 'Duet']
+const INITIAL_GENRE = 'Deep House'
 
 const DEFAULT_STATE = {
-  tema: TEMAS[0],
+  genero: INITIAL_GENRE,
+  tema: getThemesForGenre(INITIAL_GENRE)[0],
   customTema: '',
   isCustomTema: false,
   modo: 'criacao',
-  bpm: 125,
-  genero: 'Deep House',
+  bpm: getDefaultBpmForGenre(INITIAL_GENRE),
   moods: [],
   instrumentacao: [],
   tipoVocal: 'Male Vocal',
@@ -69,7 +41,7 @@ const DEFAULT_STATE = {
 export default function ConfigPanel({ onGenerate, loading }) {
   const [form, setForm] = useState(DEFAULT_STATE)
 
-
+  const genreThemes = getThemesForGenre(form.genero)
   const bpmPct = Math.max(0, Math.min(100, ((form.bpm - BPM_MIN) / (BPM_MAX - BPM_MIN)) * 100))
 
   function toggleChip(field, value) {
@@ -79,6 +51,22 @@ export default function ConfigPanel({ onGenerate, loading }) {
         ? prev[field].filter(v => v !== value)
         : [...prev[field], value],
     }))
+  }
+
+  function handleGenreChange(newGenre) {
+    const nextThemes = getThemesForGenre(newGenre)
+    const nextBpm = getDefaultBpmForGenre(newGenre)
+    setForm(prev => {
+      const keepPreset = prev.selectedPresetId &&
+        STYLE_PRESETS.find(p => p.id === prev.selectedPresetId)?.genero === newGenre
+      return {
+        ...prev,
+        genero: newGenre,
+        tema: prev.isCustomTema ? prev.tema : nextThemes[0],
+        bpm: nextBpm,
+        selectedPresetId: keepPreset ? prev.selectedPresetId : '',
+      }
+    })
   }
 
   function handlePresetSelect(presetId) {
@@ -93,22 +81,26 @@ export default function ConfigPanel({ onGenerate, loading }) {
     const preset = STYLE_PRESETS.find(p => p.id === presetId)
     if (!preset) return
 
+    const presetThemes = getThemesForGenre(preset.genero)
     setForm(prev => ({
       ...prev,
       selectedPresetId: preset.id,
       genero: preset.genero,
+      tema: prev.isCustomTema
+        ? prev.tema
+        : (presetThemes.includes(prev.tema) ? prev.tema : presetThemes[0]),
       bpm: preset.bpm,
       tipoVocal: preset.tipoVocal || prev.tipoVocal,
       moods: preset.moods || prev.moods,
       instrumentacao: preset.instrumentacao || prev.instrumentacao,
       styleTagUsuario: preset.styleTag,
-      modo: 'execucao', // presets técnicos usam o modo de execução
+      modo: 'execucao',
     }))
   }
 
   function handleGenerateType(tipoGeracao) {
     const finalTema = form.isCustomTema
-      ? (form.customTema.trim() || TEMAS[0])
+      ? (form.customTema.trim() || genreThemes[0])
       : form.tema
     onGenerate({
       tema: finalTema,
@@ -119,12 +111,13 @@ export default function ConfigPanel({ onGenerate, loading }) {
       instrumentacao: form.instrumentacao,
       tipo_vocal: form.tipoVocal,
       style_tag_usuario: form.modo === 'execucao' ? form.styleTagUsuario : undefined,
-      tipo_geracao: tipoGeracao
+      tipo_geracao: tipoGeracao,
     })
   }
 
-  // Agrupar presets dinamicamente por categoria
-  const presetGroups = STYLE_PRESETS.reduce((acc, preset) => {
+  const matchingPresets = STYLE_PRESETS.filter(p => p.genero === form.genero)
+  const otherPresets = STYLE_PRESETS.filter(p => p.genero !== form.genero)
+  const otherPresetGroups = otherPresets.reduce((acc, preset) => {
     const cat = preset.categoria || 'Outros'
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(preset)
@@ -133,9 +126,28 @@ export default function ConfigPanel({ onGenerate, loading }) {
 
   return (
     <form id="config-form" className="config-panel">
-      {/* Tema */}
+      {/* 1. Gênero */}
       <div className="form-group">
-        <label className="form-label" htmlFor="tema-select">Tema ou Título</label>
+        <label className="form-label" htmlFor="genero-select">1. Gênero Musical</label>
+        <select
+          id="genero-select"
+          className="form-select"
+          value={form.genero}
+          onChange={e => handleGenreChange(e.target.value)}
+        >
+          {GENRE_GROUPS.map(group => (
+            <optgroup key={group.label} label={group.label}>
+              {group.genres.map(g => (
+                <option key={g} value={g}>{g}</option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      </div>
+
+      {/* 2. Tema ou Título (contextualizado ao gênero) */}
+      <div className="form-group">
+        <label className="form-label" htmlFor="tema-select">2. Tema ou Título</label>
         <select
           id="tema-select"
           className="form-select"
@@ -150,7 +162,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
           required
         >
           <option value="__custom__">✏️ Personalizado (digitar tema livre)...</option>
-          {TEMAS.map(t => <option key={t} value={t}>{t}</option>)}
+          {genreThemes.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
         {form.isCustomTema && (
           <input
@@ -165,10 +177,10 @@ export default function ConfigPanel({ onGenerate, loading }) {
         )}
       </div>
 
-      {/* Preset de Estilo Musical */}
+      {/* 3. Preset de Estilo Musical (prioriza o gênero escolhido) */}
       <div className="form-group">
         <div className="form-label-row">
-          <label className="form-label" htmlFor="preset-select">Presets de Estilo Musical</label>
+          <label className="form-label" htmlFor="preset-select">3. Presets de Estilo</label>
           {form.selectedPresetId && (
             <button
               type="button"
@@ -186,9 +198,16 @@ export default function ConfigPanel({ onGenerate, loading }) {
           value={form.selectedPresetId}
           onChange={e => handlePresetSelect(e.target.value)}
         >
-          <option value="">-- Personalizado / Escolha um Estilo Pronto --</option>
-          {Object.entries(presetGroups).map(([categoria, list]) => (
-            <optgroup key={categoria} label={categoria}>
+          <option value="">-- Personalizado / Sem Preset --</option>
+          {matchingPresets.length > 0 && (
+            <optgroup label={`Recomendados para ${form.genero}`}>
+              {matchingPresets.map(p => (
+                <option key={p.id} value={p.id}>{p.nome}</option>
+              ))}
+            </optgroup>
+          )}
+          {Object.entries(otherPresetGroups).map(([categoria, list]) => (
+            <optgroup key={categoria} label={`Outros — ${categoria}`}>
               {list.map(p => (
                 <option key={p.id} value={p.id}>{p.nome}</option>
               ))}
@@ -196,7 +215,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
           ))}
         </select>
         <p className="mode-hint">
-          Selecione um estilo pronto para carregar BPM, gênero, vocal e arranjo técnico completo automaticamente.
+          Opcional: carregue um arranjo técnico pronto para preencher BPM, vocal e style tag automaticamente.
         </p>
       </div>
 
@@ -223,7 +242,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
         </div>
         <p className="mode-hint">
           {form.modo === 'criacao'
-            ? 'O sistema arquiteta o estilo técnico completo a partir do mood.'
+            ? 'O sistema arquiteta o estilo técnico completo a partir do gênero e do mood.'
             : 'Forneça suas keywords técnicas — o sistema as incorpora integralmente.'}
         </p>
       </div>
@@ -241,7 +260,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
             id="style-tag-input"
             className="form-input form-textarea"
             rows={4}
-            placeholder="Ex: 130 BPM, Tech House, rolling sub-bass, syncopated percussion, dark underground pulse..."
+            placeholder="Ex: 118 BPM, 90s Seattle grunge, distorted guitars, raspy male vocal..."
             value={form.styleTagUsuario}
             onChange={e => setForm(p => ({ ...p, styleTagUsuario: e.target.value }))}
           />
@@ -283,19 +302,6 @@ export default function ConfigPanel({ onGenerate, loading }) {
             }}
           />
         </div>
-      </div>
-
-      {/* Gênero */}
-      <div className="form-group">
-        <label className="form-label" htmlFor="genero-select">Gênero</label>
-        <select
-          id="genero-select"
-          className="form-select"
-          value={form.genero}
-          onChange={e => setForm(p => ({ ...p, genero: e.target.value }))}
-        >
-          {GENEROS.map(g => <option key={g} value={g}>{g}</option>)}
-        </select>
       </div>
 
       <div className="divider" />
