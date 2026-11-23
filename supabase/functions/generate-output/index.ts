@@ -139,7 +139,7 @@ You MUST include emoji characters exactly as instructed in the description templ
     ].join("\n");
 
     const userPrompt = `Generate a complete music production package for these parameters:
-- Theme/Title idea: ${tema}
+- Theme / Creative Concept (INSPIRATION ONLY, NOT the song title): ${tema}
 - Mode: ${modo === "execucao" ? "Execution (use exact keywords below)" : "Creation (architect the style)"}
 - BPM: ${bpm}
 - Genre: ${genero}
@@ -151,7 +151,7 @@ ${styleSection}
 Return this exact JSON structure with ALL 4 BLOCKS FULLY POPULATED:
 {
   "bloco1_audio": {
-    "titulo": "2-5 word English song title matching the theme and genre",
+    "titulo": "An ORIGINAL, creative 2-5 word English song title inspired by '${tema}' and '${genero}'. NEVER repeat or copy '${tema}' verbatim as the title - invent a fresh, poetic title!",
     "letras": "[Intro]\\nshort instrumental cue\\n\\n[Verse]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Break]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Outro]\\nline 1\\nline 2",
     "style_tag": "8-14 comma-separated SUNO style keywords including BPM, ${genero}, key instruments, vocal type, mood"
   },
@@ -175,6 +175,7 @@ MANDATORY RULES:
 - Include ALL 4 blocks: bloco1_audio, bloco2_visual, bloco3_youtube, bloco4_seo. Do not skip or truncate bloco3_youtube or bloco4_seo!
 - ALL content in English.
 - Every field (lyrics, visual prompts, YouTube description, hashtags, SEO tags) MUST reflect the selected genre "${genero}" - never use House/DJ terms unless the genre is electronic/house.
+- NEVER use "${tema}" as the song title (bloco1_audio.titulo). Always invent a brand-new, original English song title inspired by the theme.
 - The descricao field MUST end with the 3 emoji lines (moon, headphones, bell).
 - hashtags array: exactly 15 items.
 - tags_youtube array: 15-20 plain text tags.`;
@@ -199,7 +200,7 @@ MANDATORY RULES:
               { role: "system", content: systemPrompt },
               { role: "user", content: userPrompt },
             ],
-            temperature: 0.75,
+            temperature: 0.85,
             max_tokens: maxTokens,
             response_format: { type: "json_object" },
           }),

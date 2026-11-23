@@ -354,6 +354,17 @@ export const STYLE_PRESETS = [
     styleTag: 'Vocal house, 124 BPM, uplifting house piano chords, warm analog sub-bass, crisp four-on-the-floor groove, soulful powerhouse female vocal, lush pads, club-ready mix, euphoric'
   },
   {
+    id: 'vh-midnight-duet',
+    nome: 'Vocal House — Late-Night Sax & Rhodes (122 BPM)',
+    categoria: 'Deep House',
+    genero: 'Vocal House',
+    bpm: 122,
+    tipoVocal: 'Male Vocal',
+    moods: ['Late-Night', 'Sensual', 'Soulful'],
+    instrumentacao: ['Rhodes', 'Saxophone', 'Sub-Bass', 'Percussion'],
+    styleTag: 'Soulful vocal house, 122 BPM, warm Rhodes electric piano, smooth saxophone riffs, deep rolling sub-bass, crisp house groove, smooth emotive male vocal, late-night lounge club vibe'
+  },
+  {
     id: 'nd-funky-bass',
     nome: 'Nu Disco — Funky Bassline & Retro Synths (118 BPM)',
     categoria: 'Eletrônica / Club',
@@ -363,6 +374,17 @@ export const STYLE_PRESETS = [
     moods: ['Euphoric', 'Sensual', 'Nostalgic'],
     instrumentacao: ['Bass Guitar', 'Analog Synths', 'Electric Guitar', 'Percussion'],
     styleTag: 'Nu disco, 118 BPM, funky slap bass guitar, clean rhythmic disco guitar chops, warm vintage analog synths, punchy claps, smooth breathy female vocal, retro-modern groove'
+  },
+  {
+    id: 'nd-midnight-boogie',
+    nome: 'Nu Disco — Rhodes Boogie & Strings (120 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Nu Disco',
+    bpm: 120,
+    tipoVocal: 'Male Vocal',
+    moods: ['Groovy', 'Nostalgic', 'Late-Night'],
+    instrumentacao: ['Rhodes', 'Strings', 'Bass Guitar', 'Drum Machine'],
+    styleTag: 'Indie nu disco, 120 BPM, shimmering Rhodes chords, lush disco strings, groovy analog bassline, tight 80s drum machine, smooth falsetto male vocal, neon rooftop party mood'
   },
   {
     id: 'ah-tribal-organic',
@@ -376,6 +398,17 @@ export const STYLE_PRESETS = [
     styleTag: 'Afro house, 122 BPM, intricate organic tribal percussion, rolling deep sub-bass, atmospheric ethnic flute motifs, warm synth pads, hypnotic soulful male vocal, sunset club vibe'
   },
   {
+    id: 'ah-sunset-kalimba',
+    nome: 'Afro House — Sunset Kalimba & Congas (120 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Afro House',
+    bpm: 120,
+    tipoVocal: 'Female Vocal',
+    moods: ['Tribal', 'Euphoric', 'Hypnotic'],
+    instrumentacao: ['Congas & Shakers', 'Kalimba', 'Sub-Bass', 'Synth Pads'],
+    styleTag: 'Melodic afro house, 120 BPM, hypnotic kalimba melody, layered congas and shakers, deep warm sub-bass, airy atmospheric pads, soulful chanting female vocal, golden hour beach club'
+  },
+  {
     id: 'oh-sunset-downtempo',
     nome: 'Organic House — Acoustic Textures & Warm Pads (120 BPM)',
     categoria: 'Eletrônica / Club',
@@ -387,6 +420,17 @@ export const STYLE_PRESETS = [
     styleTag: 'Organic house, 120 BPM, warm acoustic guitar plucks, airy flute textures, soft shaker percussion, deep mellow bassline, ethereal female vocal, meditative, sunset desert atmosphere'
   },
   {
+    id: 'oh-desert-oud',
+    nome: 'Organic House — Plucked Strings & Deep Groove (118 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Organic House',
+    bpm: 118,
+    tipoVocal: 'Male Vocal',
+    moods: ['Mysterious', 'Hypnotic', 'Cinematic'],
+    instrumentacao: ['Oud / Plucked', 'Percussion', 'Strings', 'Sub-Bass'],
+    styleTag: 'Desert organic house, 118 BPM, hypnotic plucked oud motifs, warm cello strings, soft organic hand percussion, deep sub-bass pulse, intimate whispered male vocal, mystical night journey'
+  },
+  {
     id: 'mt-afterlife-lead',
     nome: 'Melodic Techno — Arpeggiated Synth & Dark Tension (128 BPM)',
     categoria: 'Eletrônica / Club',
@@ -396,5 +440,16 @@ export const STYLE_PRESETS = [
     moods: ['Hypnotic', 'Cinematic', 'Mysterious'],
     instrumentacao: ['Analog Synths', 'Sub-Bass', 'Synth Pads', 'Drum Machine'],
     styleTag: 'Melodic techno, 128 BPM, driving punchy kick, rolling dark sub-bass, hypnotic evolving analog synth arpeggio, wide cinematic tension risers, processed atmospheric male vocal, underground club'
+  },
+  {
+    id: 'mt-ethereal-strings',
+    nome: 'Melodic Techno — Ethereal Strings & Emotional Drop (126 BPM)',
+    categoria: 'Eletrônica / Club',
+    genero: 'Melodic Techno',
+    bpm: 126,
+    tipoVocal: 'Female Vocal',
+    moods: ['Euphoric', 'Melancholic', 'Cinematic'],
+    instrumentacao: ['Strings', 'Arpeggiator', 'Sub-Bass', 'Synth Pads'],
+    styleTag: 'Emotional melodic techno, 126 BPM, soaring cinematic strings breakdown, pulsing synth arpeggiator, deep sub-bass drop, haunting reverb-drenched female vocal, stadium warehouse atmosphere'
   }
 ]

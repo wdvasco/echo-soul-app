@@ -114,13 +114,6 @@ export default function ConfigPanel({ onGenerate, loading }) {
   }
 
   const matchingPresets = STYLE_PRESETS.filter(p => p.genero === form.genero)
-  const otherPresets = STYLE_PRESETS.filter(p => p.genero !== form.genero)
-  const otherPresetGroups = otherPresets.reduce((acc, preset) => {
-    const cat = preset.categoria || 'Outros'
-    if (!acc[cat]) acc[cat] = []
-    acc[cat].push(preset)
-    return acc
-  }, {})
 
   return (
     <form id="config-form" className="config-panel">
@@ -143,9 +136,40 @@ export default function ConfigPanel({ onGenerate, loading }) {
         </select>
       </div>
 
-      {/* 2. Tema ou Título (contextualizado ao gênero) */}
+      {/* 2. Presets de Estilo (exclusivos do gênero escolhido) */}
       <div className="form-group">
-        <label className="form-label" htmlFor="tema-select">2. Tema ou Título</label>
+        <div className="form-label-row">
+          <label className="form-label" htmlFor="preset-select">2. Presets de {form.genero}</label>
+          {form.selectedPresetId && (
+            <button
+              type="button"
+              className="preset-clear-btn"
+              onClick={() => handlePresetSelect('')}
+              title="Limpar seleção de preset"
+            >
+              Limpar
+            </button>
+          )}
+        </div>
+        <select
+          id="preset-select"
+          className="form-select preset-select"
+          value={form.selectedPresetId}
+          onChange={e => handlePresetSelect(e.target.value)}
+        >
+          <option value="">-- Personalizado / Sem Preset --</option>
+          {matchingPresets.map(p => (
+            <option key={p.id} value={p.id}>{p.nome}</option>
+          ))}
+        </select>
+        <p className="mode-hint">
+          Opcional: carregue um arranjo técnico pronto de {form.genero} (BPM, vocal e style tag).
+        </p>
+      </div>
+
+      {/* 3. Tema / Inspiração (contextualizado ao gênero) */}
+      <div className="form-group">
+        <label className="form-label" htmlFor="tema-select">3. Tema / Inspiração</label>
         <select
           id="tema-select"
           className="form-select"
@@ -173,47 +197,8 @@ export default function ConfigPanel({ onGenerate, loading }) {
             onChange={e => setForm(p => ({ ...p, customTema: e.target.value }))}
           />
         )}
-      </div>
-
-      {/* 3. Preset de Estilo Musical (prioriza o gênero escolhido) */}
-      <div className="form-group">
-        <div className="form-label-row">
-          <label className="form-label" htmlFor="preset-select">3. Presets de Estilo</label>
-          {form.selectedPresetId && (
-            <button
-              type="button"
-              className="preset-clear-btn"
-              onClick={() => handlePresetSelect('')}
-              title="Limpar seleção de preset"
-            >
-              Limpar
-            </button>
-          )}
-        </div>
-        <select
-          id="preset-select"
-          className="form-select preset-select"
-          value={form.selectedPresetId}
-          onChange={e => handlePresetSelect(e.target.value)}
-        >
-          <option value="">-- Personalizado / Sem Preset --</option>
-          {matchingPresets.length > 0 && (
-            <optgroup label={`Recomendados para ${form.genero}`}>
-              {matchingPresets.map(p => (
-                <option key={p.id} value={p.id}>{p.nome}</option>
-              ))}
-            </optgroup>
-          )}
-          {Object.entries(otherPresetGroups).map(([categoria, list]) => (
-            <optgroup key={categoria} label={`Outros — ${categoria}`}>
-              {list.map(p => (
-                <option key={p.id} value={p.id}>{p.nome}</option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
         <p className="mode-hint">
-          Opcional: carregue um arranjo técnico pronto para preencher BPM, vocal e style tag automaticamente.
+          Serve como inspiração criativa — a IA cria um título inédito para a música.
         </p>
       </div>
 
