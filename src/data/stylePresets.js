@@ -168,8 +168,30 @@ export const STYLE_PRESETS = [
     bpm: 126,
     tipoVocal: 'Male Vocal',
     moods: ['Nostalgic', 'Hypnotic', 'Cinematic'],
-    instrumentacao: ['Analog Synths', 'Electric Guitar', 'Drum Machine', 'Bass Guitar'],
+    instrumentacao: ['Analog Synths', 'Chorus Guitar', 'Drum Machine', 'Synth Bass'],
     styleTag: '80s New Wave, 126 BPM, shimmering chorus-effect electric guitar, punchy LinnDrum-style drum machine, pulsing analog synth bassline, lush Juno pads, dramatic baritone male vocal with plate reverb, nostalgic, retro-futuristic, nocturnal'
+  },
+  {
+    id: 'nw-neon-synth-rock',
+    nome: 'New Wave — Neon Synth-Rock & Gated Snare (120 BPM)',
+    categoria: 'New Wave & Post-Punk',
+    genero: 'New Wave',
+    bpm: 120,
+    tipoVocal: 'Male Vocal',
+    moods: ['Nocturnal', 'Dramatic', 'Retro-Futuristic'],
+    instrumentacao: ['Analog Synths', 'Electric Guitar', 'Drum Machine', 'Synth Pads'],
+    styleTag: '1980s New Wave synth-rock, 120 BPM, punchy gated-reverb snare, driving eighth-note synth bass, bright arpeggiated analog synths, angular clean electric guitar riffs, dramatic romantic male vocal, neon nocturnal cinema'
+  },
+  {
+    id: 'nw-dark-romantic-sax',
+    nome: 'New Wave — Dark Romantic & Saxophone (114 BPM)',
+    categoria: 'New Wave & Post-Punk',
+    genero: 'New Wave',
+    bpm: 114,
+    tipoVocal: 'Male Vocal',
+    moods: ['Melancholic', 'Nocturnal', 'Dreamy'],
+    instrumentacao: ['Saxophone', 'Synth Pads', 'Chorus Guitar', 'Drum Machine'],
+    styleTag: 'Sophisti-pop New Wave, 114 BPM, lush atmospheric synth pads, reverb-drenched saxophone solo, shimmering chorus guitar, steady 80s drum machine, smooth melancholic baritone male vocal, rainy midnight city aesthetic'
   },
   {
     id: 'nw-post-punk-dark',
@@ -179,8 +201,19 @@ export const STYLE_PRESETS = [
     bpm: 132,
     tipoVocal: 'Male Vocal',
     moods: ['Mysterious', 'Melancholic', 'Hypnotic'],
-    instrumentacao: ['Bass Guitar', 'Electric Guitar', 'Drum Machine', 'Analog Synths'],
+    instrumentacao: ['Bass Guitar', 'Chorus Guitar', 'Drum Machine', 'Analog Synths'],
     styleTag: 'Dark post-punk, 132 BPM, driving melodic bass guitar lead, angular reverb-drenched guitar, crisp mechanical drum machine, cold atmospheric synth pads, detached baritone male vocal, nocturnal, moody, underground'
+  },
+  {
+    id: 'nw-post-punk-fast',
+    nome: 'Post-Punk — Driving Reverb Bass & Cold Snare (138 BPM)',
+    categoria: 'New Wave & Post-Punk',
+    genero: 'Post-Punk',
+    bpm: 138,
+    tipoVocal: 'Male Vocal',
+    moods: ['Dark', 'Nocturnal', 'Rebellious'],
+    instrumentacao: ['Bass Guitar', 'Electric Guitar', 'Reverb Snare', 'Synth Pads'],
+    styleTag: 'Fast 80s post-punk, 138 BPM, relentless motorik bass guitar hook, razor-sharp trebly guitar, cavernous reverb snare, cold dark-wave synth wash, urgent brooding male vocal, stark monochrome energy'
   },
 
   // POP & SYNTH-POP
@@ -207,6 +240,17 @@ export const STYLE_PRESETS = [
     styleTag: '80s synth-pop, 122 BPM, bright analog synth arpeggios, gated-reverb snare, bouncy synth bass, catchy soaring female vocal hook, lush retro pads, euphoric, nostalgic, neon cinematic'
   },
   {
+    id: 'pop-synthpop-arcade',
+    nome: 'Synth-Pop — Midnight Arcade & Arpeggiator (118 BPM)',
+    categoria: 'Pop & Synth-Pop',
+    genero: 'Synth-Pop',
+    bpm: 118,
+    tipoVocal: 'Male Vocal',
+    moods: ['Retro-Futuristic', 'Nostalgic', 'Melancholic'],
+    instrumentacao: ['Arpeggiator', 'Synth Bass', 'Analog Synths', 'Drum Machine'],
+    styleTag: '80s electronic synth-pop, 118 BPM, shimmering analog arpeggiator, warm synth bassline, crisp electronic claps, emotional male vocal with dreamy chorus harmonies, midnight arcade glow'
+  },
+  {
     id: 'pop-indie-groove',
     nome: 'Pop — Warm Guitar & Radio Hook (112 BPM)',
     categoria: 'Pop & Synth-Pop',
@@ -217,8 +261,41 @@ export const STYLE_PRESETS = [
     instrumentacao: ['Electric Guitar', 'Piano', 'Sub-Bass', 'Percussion'],
     styleTag: 'Modern pop, 112 BPM, clean rhythmic electric guitar chords, warm piano layers, tight punchy drums, deep sub-bass, smooth catchy male vocal, glossy radio mix, uplifting, emotional'
   },
+  {
+    id: 'pop-acoustic-electro',
+    nome: 'Pop — Intimate Acoustic & Electro Drop (105 BPM)',
+    categoria: 'Pop & Synth-Pop',
+    genero: 'Pop',
+    bpm: 105,
+    tipoVocal: 'Female Vocal',
+    moods: ['Introspective', 'Dreamy', 'Cinematic'],
+    instrumentacao: ['Guitar', 'Synth Pads', 'Sub-Bass', 'Drum Machine'],
+    styleTag: 'Modern electro-pop ballad, 105 BPM, intimate fingerpicked acoustic guitar in verses building to lush synth pads and deep sub-bass chorus, crisp electronic snap beat, expressive breathy female vocal'
+  },
 
-  // HARD ROCK & INDIE ROCK
+  // HARD ROCK, CLASSIC, ALTERNATIVE & INDIE ROCK
+  {
+    id: 'rock-classic-blues',
+    nome: 'Classic Rock — Southern Blues & Slide Guitar (108 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Classic Rock',
+    bpm: 108,
+    tipoVocal: 'Male Vocal',
+    moods: ['Soulful', 'Gritty', 'Nostalgic'],
+    instrumentacao: ['Slide Guitar', 'Electric Guitar', 'Hammond Organ', 'Acoustic Drums'],
+    styleTag: '70s bluesy classic rock, 108 BPM, soulful slide guitar, warm Hammond organ swells, crunchy vintage tube-amp rhythm guitar, laid-back heavy pocket drums, raspy soulful male vocal, analog tape warmth'
+  },
+  {
+    id: 'rock-alt-ballad',
+    nome: 'Alternative Rock — Atmospheric Verse & Soaring Chorus (92 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Alternative Rock',
+    bpm: 92,
+    tipoVocal: 'Male Vocal',
+    moods: ['Melancholic', 'Cinematic', 'Anthemic'],
+    instrumentacao: ['Electric Guitar', 'Distorted Guitar', 'Strings', 'Acoustic Drums'],
+    styleTag: '90s/2000s alternative rock ballad, 92 BPM, echoing clean electric guitar arpeggios and subtle strings in verse, exploding into wide wall-of-sound distorted guitars and soaring emotional male vocal in chorus'
+  },
   {
     id: 'rock-hard-arena',
     nome: 'Hard Rock — Heavy Riffs & Thunderous Drums (132 BPM)',
@@ -231,6 +308,17 @@ export const STYLE_PRESETS = [
     styleTag: 'Hard rock, 132 BPM, heavy crunch electric guitar riffs, driving bass guitar, thunderous live acoustic drums, soaring gritty male vocal, stadium-sized chorus, analog saturation, high energy'
   },
   {
+    id: 'rock-hard-80s',
+    nome: 'Hard Rock — 80s Sunset Strip & Shred Solo (126 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Hard Rock',
+    bpm: 126,
+    tipoVocal: 'Male Vocal',
+    moods: ['Anthemic', 'Energetic', 'Euphoric'],
+    instrumentacao: ['Electric Guitar', 'Guitar Solo', 'Bass Guitar', 'Acoustic Drums'],
+    styleTag: '80s arena hard rock, 126 BPM, twin overdriven electric guitars, flashy melodic guitar solo, big gated snare drum kit, driving eighth-note bass, high-range powerful male vocal with gang chorus harmonies'
+  },
+  {
     id: 'rock-indie-jangle',
     nome: 'Indie Rock — Reverb Guitars & Driving Beat (124 BPM)',
     categoria: 'Rock & Grunge',
@@ -240,6 +328,17 @@ export const STYLE_PRESETS = [
     moods: ['Nostalgic', 'Dreamy', 'Energetic'],
     instrumentacao: ['Electric Guitar', 'Bass Guitar', 'Acoustic Drums', 'Analog Synths'],
     styleTag: 'Indie rock, 124 BPM, shimmering reverb-soaked electric guitars, melodic driving bassline, tight upbeat acoustic drums, subtle analog synth texture, expressive male vocal, bittersweet, anthemic'
+  },
+  {
+    id: 'rock-indie-shoegaze',
+    nome: 'Indie Rock — Dreamy Shoegaze & Lush Fuzz (116 BPM)',
+    categoria: 'Rock & Grunge',
+    genero: 'Indie Rock',
+    bpm: 116,
+    tipoVocal: 'Female Vocal',
+    moods: ['Dreamy', 'Melancholic', 'Bittersweet'],
+    instrumentacao: ['Electric Guitar', 'Synth Pads', 'Bass Guitar', 'Acoustic Drums'],
+    styleTag: 'Dreamy shoegaze indie rock, 116 BPM, swirling wall of reverb and fuzz guitars, warm bassline, steady hypnotic acoustic drums, ethereal breathy female vocal buried softly in the mix, nostalgic haze'
   },
 
   // ELETRÔNICA EXTRA (VOCAL HOUSE, NU DISCO, AFRO, ORGANIC, MELODIC TECHNO)

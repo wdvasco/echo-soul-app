@@ -1,21 +1,13 @@
 import { useState } from 'react'
 import { STYLE_PRESETS } from '../data/stylePresets'
-import { GENRE_GROUPS, getDefaultBpmForGenre, getThemesForGenre } from '../data/genreCatalog'
+import {
+  GENRE_GROUPS,
+  getDefaultBpmForGenre,
+  getInstrumentsForGenre,
+  getMoodsForGenre,
+  getThemesForGenre,
+} from '../data/genreCatalog'
 import './ConfigPanel.css'
-
-const MOODS = [
-  'Late-Night', 'Melancholic', 'Cinematic', 'Euphoric',
-  'Hypnotic', 'Introspective', 'Sensual', 'Mysterious',
-  'Rebellious', 'Nostalgic', 'Anthemic', 'Gritty',
-  'Energetic', 'Dreamy',
-]
-
-const INSTRUMENTOS = [
-  'Rhodes', 'Saxophone', 'Sub-Bass', 'Synth Pads',
-  'Guitar', 'Electric Guitar', 'Distorted Guitar', 'Bass Guitar',
-  'Acoustic Drums', 'Analog Synths', 'Drum Machine', 'Piano',
-  'Flute', 'Strings', 'Percussion',
-]
 
 const VOCAIS = ['Male Vocal', 'Female Vocal', 'Duet']
 
@@ -42,6 +34,8 @@ export default function ConfigPanel({ onGenerate, loading }) {
   const [form, setForm] = useState(DEFAULT_STATE)
 
   const genreThemes = getThemesForGenre(form.genero)
+  const genreMoods = getMoodsForGenre(form.genero)
+  const genreInstruments = getInstrumentsForGenre(form.genero)
   const bpmPct = Math.max(0, Math.min(100, ((form.bpm - BPM_MIN) / (BPM_MAX - BPM_MIN)) * 100))
 
   function toggleChip(field, value) {
@@ -56,6 +50,8 @@ export default function ConfigPanel({ onGenerate, loading }) {
   function handleGenreChange(newGenre) {
     const nextThemes = getThemesForGenre(newGenre)
     const nextBpm = getDefaultBpmForGenre(newGenre)
+    const allowedMoods = new Set(getMoodsForGenre(newGenre))
+    const allowedInstruments = new Set(getInstrumentsForGenre(newGenre))
     setForm(prev => {
       const keepPreset = prev.selectedPresetId &&
         STYLE_PRESETS.find(p => p.id === prev.selectedPresetId)?.genero === newGenre
@@ -64,6 +60,8 @@ export default function ConfigPanel({ onGenerate, loading }) {
         genero: newGenre,
         tema: prev.isCustomTema ? prev.tema : nextThemes[0],
         bpm: nextBpm,
+        moods: prev.moods.filter(m => allowedMoods.has(m)),
+        instrumentacao: prev.instrumentacao.filter(i => allowedInstruments.has(i)),
         selectedPresetId: keepPreset ? prev.selectedPresetId : '',
       }
     })
@@ -310,7 +308,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
       <div className="form-group">
         <label className="form-label">Mood / Atmosfera</label>
         <div className="chips-grid">
-          {MOODS.map(m => (
+          {genreMoods.map(m => (
             <button
               key={m}
               type="button"
@@ -327,7 +325,7 @@ export default function ConfigPanel({ onGenerate, loading }) {
       <div className="form-group">
         <label className="form-label">Instrumentação</label>
         <div className="chips-grid">
-          {INSTRUMENTOS.map(i => (
+          {genreInstruments.map(i => (
             <button
               key={i}
               type="button"
