@@ -10,9 +10,21 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+function hasPlaceholderLyrics(letras: unknown): boolean {
+  if (typeof letras !== "string") return true;
+  const trimmed = letras.trim();
+  if (trimmed.length < 80) return true;
+  return /\bline\s*[1-9]\b/i.test(trimmed) || /short instrumental cue/i.test(trimmed);
+}
+
 function isValidOutputPackage(obj: any): boolean {
   if (!obj || typeof obj !== "object") return false;
-  const hasB1 = Boolean(obj.bloco1_audio?.titulo && obj.bloco1_audio?.letras && obj.bloco1_audio?.style_tag);
+  const hasB1 = Boolean(
+    obj.bloco1_audio?.titulo &&
+    obj.bloco1_audio?.letras &&
+    !hasPlaceholderLyrics(obj.bloco1_audio.letras) &&
+    obj.bloco1_audio?.style_tag
+  );
   const hasB2 = Boolean(obj.bloco2_visual?.arte_principal && obj.bloco2_visual?.thumbnail);
   const hasB3 = Boolean(obj.bloco3_youtube?.titulo && obj.bloco3_youtube?.descricao);
   const hasB4 = Boolean(obj.bloco4_seo?.tags_youtube);
@@ -152,13 +164,13 @@ Return this exact JSON structure with ALL 4 BLOCKS FULLY POPULATED:
 {
   "bloco1_audio": {
     "titulo": "An ORIGINAL, creative 2-5 word English song title inspired by '${tema}' and '${genero}'. NEVER repeat or copy '${tema}' verbatim as the title - invent a fresh, poetic title!",
-    "letras": "[Intro]\\nshort instrumental cue\\n\\n[Verse]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Break]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Chorus]\\nline 1\\nline 2\\nline 3\\nline 4\\n\\n[Outro]\\nline 1\\nline 2",
+    "letras": "COMPLETE original English song lyrics inspired by '${tema}' and '${genero}', structured with [Intro], [Verse], [Chorus], [Break], [Chorus], [Outro] tags and real singable poetic verses (4+ lines per Verse/Chorus). NEVER output placeholder text like 'line 1', 'line 2', or 'short instrumental cue'.",
     "style_tag": "8-14 comma-separated SUNO style keywords including BPM, ${genero}, key instruments, vocal type, mood"
   },
   "bloco2_visual": {
     "arte_principal": "Detailed cinematic image prompt matching ${genero} and ${tema}: Scene, Lighting, Color palette, Aesthetic, Atmosphere",
-    "thumbnail": "YouTube thumbnail prompt matching ${genero}: bold composition, high contrast, readable title, impactful central visual",
-    "video_loop": "3-5 sentence motion loop for a YouTube visualizer synchronized with the beat/rhythm, matching ${genero} aesthetic"
+    "thumbnail": "Clean, minimalist 16:9 YouTube music thumbnail matching the exact cinematic landscape/scene of arte_principal and ${genero}: natural atmospheric photography with generous negative space, understated cohesive color grading (NO garish, oversaturated, or flashy neon colors, NO extra people or random silhouettes), and ONLY the song title centered cleanly in thin, minimal white sans-serif typography.",
+    "video_loop": "3-5 sentence SEAMLESS INFINITE LOOP (cinemagraph style) video prompt for a YouTube visualizer matching ${genero} and ${tema}: MUST use a static locked-off camera (NO zoom in, NO push-in, NO camera pan/travel) so the start and end frames match seamlessly; describe continuous cyclic motion inside the frame (e.g., flowing water/waves, drifting fog/particles, flickering neon reflections, pulsing light synced to ${bpm} BPM) like an endless waterfall."
   },
   "bloco3_youtube": {
     "titulo": "[Song Name] | [Emotional Descriptor] | [${genero}] | [BPM] BPM",

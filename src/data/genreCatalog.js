@@ -44,6 +44,9 @@ export const GENRE_CONFIG = {
     temas: [
       'Neon Shadows', 'Midnight Drive', 'Sunset Grooves', 'Oceanic Depths',
       'Velvet Nights', 'Ibiza Sunrise', 'Cosmic Lounge', 'Underground Whispers',
+      'Twilight Coastline', 'Rain on Glass', 'Amber Horizon', 'Afterhours Terrace',
+      'Deep Blue Echoes', 'Silent City Lights', 'Moonlit Tide', 'Mirage in Motion',
+      'Endless Boulevard', 'Golden Hour Drift',
     ],
     moods: ['Late-Night', 'Hypnotic', 'Sensual', 'Melancholic', 'Cinematic', 'Introspective', 'Dreamy', 'Mysterious'],
     instruments: ['Sub-Bass', 'Synth Pads', 'Rhodes', 'Saxophone', 'Piano', 'Guitar', 'Flute', 'Percussion'],
@@ -71,6 +74,9 @@ export const GENRE_CONFIG = {
     temas: [
       'Velvet Nights', 'Sunset Grooves', 'Ibiza Sunrise', 'Lost in the Rhythm',
       'Neon Shadows', 'Midnight Drive', 'Cosmic Lounge',
+      'Midnight Bloom', 'Golden Rooftop', 'Summer Coastal Drive', 'Echoes Between Us',
+      'Chasing Daylight', 'Silk & Static', 'Fading City Lights', 'Endless Horizon',
+      'Warm Rain at Dawn',
     ],
     moods: ['Euphoric', 'Sensual', 'Late-Night', 'Soulful', 'Anthemic', 'Dreamy', 'Cinematic', 'Energetic'],
     instruments: ['Piano', 'Sub-Bass', 'Synth Pads', 'Rhodes', 'Strings', 'Saxophone', 'Percussion', 'Bass Guitar'],
@@ -80,6 +86,9 @@ export const GENRE_CONFIG = {
     temas: [
       'Sunset Grooves', 'Velvet Nights', 'Neon Arcade', 'Cosmic Lounge',
       'Electric Youth', 'Midnight Drive',
+      'Mirrorball Horizon', 'Palm Boulevard', 'Midnight Boogie', 'Analog Sunset',
+      'Retro Rooftop', 'Starlight Riviera', 'Chrome & Velvet', 'Disco Mirage',
+      'Pacific Coast Twilight', 'Golden Cassette',
     ],
     moods: ['Euphoric', 'Sensual', 'Nostalgic', 'Groovy', 'Energetic', 'Dreamy', 'Late-Night', 'Cinematic'],
     instruments: ['Bass Guitar', 'Electric Guitar', 'Analog Synths', 'Rhodes', 'Strings', 'Saxophone', 'Percussion', 'Drum Machine'],
