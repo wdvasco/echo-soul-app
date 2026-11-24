@@ -1,14 +1,15 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabase'
 import AuthPage from './components/AuthPage'
 import ConfigPanel from './components/ConfigPanel'
 import OutputPanel from './components/OutputPanel'
 import HistoryPanel from './components/HistoryPanel'
+import UserSettingsModal from './components/UserSettingsModal'
 import './App.css'
 
 function Toast({ message, onDone }) {
   useEffect(() => {
-    const t = setTimeout(onDone, 2000)
+    const t = setTimeout(onDone, 2200)
     return () => clearTimeout(t)
   }, [onDone])
   return <div className="toast">{message}</div>
@@ -16,10 +17,13 @@ function Toast({ message, onDone }) {
 
 export default function App() {
   const [session, setSession] = useState(null)
+  const [profile, setProfile] = useState(null)
   const [authChecked, setAuthChecked] = useState(false)
+  const [recoveryMode, setRecoveryMode] = useState(false)
   const [output, setOutput] = useState(null)
   const [loading, setLoading] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
+  const [settingsTab, setSettingsTab] = useState(null) // null | 'profile' | 'security' | 'admin'
   const [toasts, setToasts] = useState([])
   const [error, setError] = useState('')
 
@@ -29,11 +33,32 @@ export default function App() {
       setSession(session)
       setAuthChecked(true)
     })
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session)
+      if (!session) setProfile(null)
+      if (event === 'PASSWORD_RECOVERY') {
+        setRecoveryMode(true)
+      }
     })
     return () => subscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    const userId = session?.user?.id
+    if (!userId) return
+    let active = true
+    supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single()
+      .then(({ data, error: profErr }) => {
+        if (active && !profErr && data) {
+          setProfile(data)
+        }
+      })
+    return () => { active = false }
+  }, [session?.user?.id])
 
   function addToast(msg) {
     const id = Date.now()
@@ -69,9 +94,9 @@ export default function App() {
       const json = await res.json()
       if (!res.ok || !json.success) throw new Error(json.error || 'Erro na geração.')
 
-      let finalData = json.data;
+      let finalData = json.data
       if (params.tipo_geracao === 'suno') {
-        finalData = { prompt_suno: json.data.bloco1_audio };
+        finalData = { prompt_suno: json.data.bloco1_audio }
       }
 
       setOutput(finalData)
@@ -87,6 +112,8 @@ export default function App() {
     await supabase.auth.signOut()
     setOutput(null)
     setShowHistory(false)
+    setSettingsTab(null)
+    setProfile(null)
   }
 
   if (!authChecked) {
@@ -100,11 +127,36 @@ export default function App() {
     )
   }
 
-  if (!session) {
-    return <AuthPage onAuth={() => {}} />
+  if (!session || recoveryMode) {
+    return (
+      <AuthPage
+        key={recoveryMode ? 'recovery' : 'auth'}
+        recoveryMode={recoveryMode}
+        onRecoveryDone={() => setRecoveryMode(false)}
+        onAuth={() => {}}
+      />
+    )
+  }
+
+  if (profile?.status === 'suspended') {
+    return (
+      <div className="app-loading">
+        <div className="glass suspended-card">
+          <h2 className="gold-gradient">Conta Suspensa</h2>
+          <p>
+            Seu acesso ao Echo Soul foi temporariamente suspenso por um administrador.
+          </p>
+          <button className="btn btn-ghost" onClick={handleLogout}>
+            Sair da conta
+          </button>
+        </div>
+      </div>
+    )
   }
 
   const userEmail = session.user?.email ?? ''
+  const displayName = profile?.full_name || userEmail.split('@')[0]
+  const isAdmin = profile?.role === 'admin'
 
   return (
     <div className="app">
@@ -143,10 +195,33 @@ export default function App() {
           >
             🕐 Histórico
           </button>
+          {isAdmin && (
+            <button
+              id="admin-panel-btn"
+              className="btn btn-ghost header-btn header-admin-btn"
+              onClick={() => setSettingsTab('admin')}
+              title="Painel Administrativo"
+            >
+              🛡 Admin
+            </button>
+          )}
           <div className="header-user">
-            <span className="header-email" title={userEmail}>
-              {userEmail.split('@')[0]}
-            </span>
+            <button
+              id="user-settings-btn"
+              className="header-user-trigger"
+              onClick={() => setSettingsTab('profile')}
+              title="Configurações da conta"
+            >
+              <span className="header-avatar">
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt="" />
+                ) : (
+                  displayName.slice(0, 2).toUpperCase()
+                )}
+              </span>
+              <span className="header-email">{displayName}</span>
+              {isAdmin && <span className="header-role-pill">ADMIN</span>}
+            </button>
             <button
               id="logout-btn"
               className="btn btn-ghost header-btn-sm"
@@ -184,6 +259,19 @@ export default function App() {
         <HistoryPanel
           onSelect={setOutput}
           onClose={() => setShowHistory(false)}
+        />
+      )}
+
+      {/* User Settings & Admin Modal */}
+      {settingsTab && (
+        <UserSettingsModal
+          session={session}
+          profile={profile}
+          initialTab={settingsTab}
+          onClose={() => setSettingsTab(null)}
+          onProfileUpdated={(updated) => setProfile(updated)}
+          onAccountDeleted={handleLogout}
+          onToast={addToast}
         />
       )}
 
